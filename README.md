@@ -19,5 +19,4 @@ Code:
 censorText("hello this loopdaloop is zoinks fine")
 Results: "hello this is fine"
 
-
 Test: "

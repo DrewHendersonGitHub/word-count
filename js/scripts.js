@@ -85,7 +85,6 @@ function mostUsedWords(text) {
     }
   });
   countArray.sort().reverse();
-
   return countArray;
 }
 
@@ -99,7 +98,7 @@ function boldPassage(word, text) {
   let textArray = text.split(" ");
   textArray.forEach(function(element, index) {
     if (element.toLowerCase().includes(word.toLowerCase())) {
-      htmlString = htmlString.concat("<b>" + element + "</b>");
+      htmlString = htmlString.concat(element.replace(word, "<b>" + word + "</b>"));
     } else {
       htmlString = htmlString.concat(element);
     }
