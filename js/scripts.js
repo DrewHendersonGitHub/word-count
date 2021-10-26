@@ -34,6 +34,24 @@ function numberOfOccurrencesInText(word, text) {
   return wordCount;
 }
 
+function censorText(text) {
+  const textArray = text.split(" ");
+  const bannedWords = ["zoinks", "muppeteer", "biffaroni", "loopdaloop"];
+  let censoredArray = [];
+  textArray.forEach(function(word) {
+    let isBannedWord = false;
+    bannedWords.forEach(function(censoredWord) {
+      if (word.toLowerCase().includes(censoredWord)) {
+        isBannedWord = true;
+      }      
+    });
+    if (!isBannedWord) {
+      censoredArray.push(word);
+    }
+  });
+  return censoredArray.join(" ");
+}
+
 
   /*
   newArray = [];
@@ -67,7 +85,6 @@ function mostUsedWords(text) {
     }
   });
   countArray.sort().reverse();
-  console.log(countArray);
 
   return countArray;
 }
@@ -94,17 +111,23 @@ function boldPassage(word, text) {
 }
 
 function commonWords(countArray) {
-  let htmlString = "<li>";
-  htmlString = htmlString.concat(countArray[0][1] + ": " + countArray[0][0] + "</li>");
-  htmlString = htmlString.concat("<li>" + countArray[1][1] + ": " + countArray[1][0] + "</li>");
-  htmlString = htmlString.concat("<li>" + countArray[2][1] + ": " + countArray[2][0] + "</li>");
+  let htmlString = "";
+  if (countArray.length > 0 && countArray[0][0] != 0) {
+    htmlString = htmlString.concat("<li>" + countArray[0][1] + ": " + countArray[0][0] + "</li>");
+  }  
+  if (countArray.length > 1 && countArray[1][0] != 0) {
+    htmlString = htmlString.concat("<li>" + countArray[1][1] + ": " + countArray[1][0] + "</li>");
+  }
+  if (countArray.length > 2 && countArray[2][0] != 0) {
+    htmlString = htmlString.concat("<li>" + countArray[2][1] + ": " + countArray[2][0] + "</li>");
+  }
   return htmlString;
 }
 
 $(document).ready(function(){
   $("form#word-counter").submit(function(event){
     event.preventDefault();
-    const passage = $("#text-passage").val();
+    const passage = censorText($("#text-passage").val());
     const word = $("#word").val();
     const wordCount = wordCounter(passage);
     const occurrencesOfWord = numberOfOccurrencesInText(word, passage);
